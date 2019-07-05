@@ -19,3 +19,10 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+.eslintignore
+.eslintrc.js
+package.json
+yarn.lock
+config/**/*.*
+build/**/*.*
+api-interface/**/*.*

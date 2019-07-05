@@ -23,7 +23,8 @@ const gitignoreFiles = [
   'yarn.lock',
   'config/**/*.*',
   'build/**/*.*',
-  'api-interface/**/*.*'
+  'api-interface/**/*.*',
+  'test.txt'
 ]
 const { exec } = require('child_process')
 const fs = require('fs')
