@@ -1,0 +1,9 @@
+{
+  "name": "git-stop-track",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "shelljs": "^0.8.3"
+  }
+}
