@@ -26,3 +26,11 @@ yarn.lock
 config/**/*.*
 build/**/*.*
 api-interface/**/*.*
+.eslintignore
+.eslintrc.js
+package.json
+yarn.lock
+config/**/*.*
+build/**/*.*
+api-interface/**/*.*
+test.txt
