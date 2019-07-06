@@ -44,6 +44,11 @@ const difference = (arr1, arr2) => {
   return arr1.filter(x => !s.has(x))
 }
 
+const SEPARATOR = process.platform === 'win32' ? ';' : ':'
+const env = Object.assign({}, process.env)
+
+env.PATH = resolve('') + SEPARATOR + env.PATH
+
 function updateGitignoreConfig() {
   const gitPath = resolve('.git')
   const gitignorePath = resolve('./.gitignore')
@@ -99,10 +104,17 @@ async function assumeUnchangedFiles(gitignoreFiles = []) {
   const promiseFiles = gitignoreGlobFiles.map(
     file =>
       new Promise(resolve => {
-        exec(`git update-index --assume-unchanged ${file}`, err => {
-          // if (err) reject(err)
-          resolve()
-        })
+        exec(
+          `git update-index --assume-unchanged ${file}`,
+          {
+            cwd: process.cwd(),
+            env: env
+          },
+          err => {
+            // if (err) reject(err)
+            resolve()
+          }
+        )
       })
   )
   Promise.all(promiseFiles)

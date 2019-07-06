@@ -35,5 +35,11 @@ config/*.*
 build/*.*
 api-interface/*.*
 test.txt
+.eslintignore
+.eslintrc.js
+package.json
+yarn.lock
+config/*.*
+build/*.*
+api-interface/*.*
 config/pro.env.js
-config/test.env.js
