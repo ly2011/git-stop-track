@@ -43,3 +43,4 @@ config/*.*
 build/*.*
 api-interface/*.*
 config/pro.env.js
+t1.txt
