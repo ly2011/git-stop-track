@@ -16,6 +16,8 @@
 //   echo('已安装git')
 // }
 
+const glob = require('tiny-glob')
+
 const gitignoreFiles = [
   '.eslintignore',
   '.eslintrc.js',
@@ -54,7 +56,7 @@ function updateGitignoreConfig() {
   const needGitignoreFiles = difference(gitignoreFiles, lines)
   const needGitignoreFilesStr =
     needGitignoreFiles.length > 0 ? needGitignoreFiles.join('\n') + '\n' : ''
-  console.log('needGitignoreFiles: ', needGitignoreFiles)
+  // console.log('needGitignoreFiles: ', needGitignoreFiles)
   if (!needGitignoreFilesStr) {
     assumeUnchangedFiles(gitignoreFiles) // 至于为何不是传入needGitignoreFiles而是gitignoreFiles，是为了有童鞋已经手动添加到 `.gitignore` 文件导致没有实际停止追踪文件
     return
@@ -66,8 +68,22 @@ function updateGitignoreConfig() {
   })
 }
 
-function assumeUnchangedFiles(gitignoreFiles = []) {
-  const promiseFiles = gitignoreFiles.map(
+async function globFiles(files = []) {
+  const tmpFiles = await Promise.all(
+    files.map(async file => {
+      try {
+        return await glob(file)
+      } catch (err) {
+        return undefined
+      }
+    })
+  )
+  return [].concat(...tmpFiles.filter(Boolean))
+}
+
+async function assumeUnchangedFiles(gitignoreFiles = []) {
+  const gitignoreGlobFiles = await globFiles(gitignoreFiles)
+  const promiseFiles = gitignoreGlobFiles.map(
     file =>
       new Promise((resolve, reject) => {
         // if (!fs.existsSync(path.resolve(file))) {
