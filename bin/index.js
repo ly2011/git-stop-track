@@ -33,7 +33,7 @@ let gitignoreFiles = [
 ]
 
 const resolve = function(dir) {
-  return path.resolve(__dirname, dir)
+  return path.resolve(__dirname, '..', dir)
 }
 
 const unique = arr => {
@@ -53,7 +53,7 @@ function updateGitignoreConfig() {
   }
 
   let argParams = argv.f
-
+  // console.log('argParams: ', argParams)
   if (argParams) {
     const tmpArgParams = argParams.includes(',')
       ? argParams.split(',')
