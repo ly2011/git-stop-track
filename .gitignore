@@ -35,3 +35,5 @@ config/*.*
 build/*.*
 api-interface/*.*
 test.txt
+config/pro.env.js
+config/test.env.js

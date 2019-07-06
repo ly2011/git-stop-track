@@ -17,25 +17,28 @@
 // }
 
 const glob = require('tiny-glob')
+const { exec } = require('child_process')
+const fs = require('fs')
+const path = require('path')
+const argv = require('yargs').alias('f', 'file').argv
 
-const gitignoreFiles = [
+let gitignoreFiles = [
   '.eslintignore',
   '.eslintrc.js',
   'package.json',
   'yarn.lock',
   'config/*.*',
   'build/*.*',
-  'api-interface/*.*',
-  'test.txt'
+  'api-interface/*.*'
 ]
-const { exec } = require('child_process')
-const fs = require('fs')
-const path = require('path')
 
 const resolve = function(dir) {
   return path.resolve(__dirname, dir)
 }
 
+const unique = arr => {
+  return Array.from(new Set(arr))
+}
 const difference = (arr1, arr2) => {
   const s = new Set(arr2)
   return arr1.filter(x => !s.has(x))
@@ -48,6 +51,16 @@ function updateGitignoreConfig() {
   if (!fs.existsSync(gitPath)) {
     return console.error('.git 文件夹不存在')
   }
+
+  let argParams = argv.f
+
+  if (argParams) {
+    const tmpArgParams = argParams.includes(',')
+      ? argParams.split(',')
+      : argParams.split(' ')
+    gitignoreFiles = unique(gitignoreFiles.concat(tmpArgParams))
+  }
+  // console.log('gitignoreFiles: ', gitignoreFiles)
 
   const lines = fs
     .readFileSync(gitignorePath)
@@ -85,12 +98,8 @@ async function assumeUnchangedFiles(gitignoreFiles = []) {
   const gitignoreGlobFiles = await globFiles(gitignoreFiles)
   const promiseFiles = gitignoreGlobFiles.map(
     file =>
-      new Promise((resolve, reject) => {
-        // if (!fs.existsSync(path.resolve(file))) {
-        //   return resolve()
-        // }
+      new Promise(resolve => {
         exec(`git update-index --assume-unchanged ${file}`, err => {
-          // console.log('我被执行了: ', file)
           // if (err) reject(err)
           resolve()
         })
