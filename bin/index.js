@@ -30,9 +30,9 @@ let gitignoreFiles = [
   'api-interface/*.*'
 ]
 
-const resolve = function(dir) {
-  return path.resolve(__dirname, '..', dir)
-}
+// const resolve = function(dir) {
+//   return path.resolve(__dirname, '..', dir)
+// }
 
 const unique = arr => {
   return Array.from(new Set(arr))
@@ -42,17 +42,20 @@ const difference = (arr1, arr2) => {
   return arr1.filter(x => !s.has(x))
 }
 
-const SEPARATOR = process.platform === 'win32' ? ';' : ':'
-const env = Object.assign({}, process.env)
+// const SEPARATOR = process.platform === 'win32' ? ';' : ':'
+// const env = Object.assign({}, process.env)
 
-env.PATH = resolve('') + SEPARATOR + env.PATH
+// env.PATH = resolve('') + SEPARATOR + env.PATH
 
 function updateGitignoreConfig() {
-  const gitPath = resolve('.git')
-  const gitignorePath = resolve('./.gitignore')
+  const gitPath = path.resolve('.git')
+  const gitignorePath = path.resolve('./.gitignore')
+
+  console.log('gitPath: ', gitPath)
+  console.log('gitignorePath: ', gitignorePath)
 
   if (!fs.existsSync(gitPath)) {
-    return console.error('.git 文件夹不存在')
+    return console.error('您还没初始化git')
   }
 
   let argParams = argv.f
@@ -102,17 +105,10 @@ async function assumeUnchangedFiles(gitignoreFiles = []) {
   const promiseFiles = gitignoreGlobFiles.map(
     file =>
       new Promise(resolve => {
-        exec(
-          `git update-index --assume-unchanged ${file}`,
-          {
-            cwd: process.cwd(),
-            env: env
-          },
-          err => {
-            // if (err) reject(err)
-            resolve()
-          }
-        )
+        exec(`git update-index --assume-unchanged ${file}`, err => {
+          // if (err) reject(err)
+          resolve()
+        })
       })
   )
   Promise.all(promiseFiles)
