@@ -23,7 +23,7 @@ yarn-error.log*
 .eslintrc.js
 package.json
 yarn.lock
-config/**/*.*
-build/**/*.*
-api-interface/**/*.*
 test.txt
+config/*.*
+build/*.*
+api-interface/*.*

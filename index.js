@@ -21,9 +21,9 @@ const gitignoreFiles = [
   '.eslintrc.js',
   'package.json',
   'yarn.lock',
-  'config/**/*.*',
-  'build/**/*.*',
-  'api-interface/**/*.*',
+  'config/*.*',
+  'build/*.*',
+  'api-interface/*.*',
   'test.txt'
 ]
 const { exec } = require('child_process')
