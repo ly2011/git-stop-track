@@ -25,8 +25,6 @@ const argv = require('yargs').alias('f', 'file').argv
 let gitignoreFiles = [
   '.eslintignore',
   '.eslintrc.js',
-  'package.json',
-  'yarn.lock',
   'config/*.*',
   'build/*.*',
   'api-interface/*.*'

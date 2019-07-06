@@ -2,7 +2,8 @@
 
 > https://segmentfault.com/q/1010000000430426
 
-> git update-index --assume-unchanged
+> git update-index --assume-unchanged # 取消已跟踪的文件
+> git update-index --no-assume-unchanged # 重新跟踪
 
 ## 安装使用
 
@@ -18,8 +19,6 @@ git-stop-track -f config/pro.env.js
 ```txt
 '.eslintignore',
 '.eslintrc.js',
-'package.json',
-'yarn.lock',
 'config/*.*',
 'build/*.*',
 'api-interface/*.*'

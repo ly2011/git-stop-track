@@ -1,9 +1,16 @@
 {
   "name": "git-stop-track",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "index.js",
   "license": "MIT",
-  "devDependencies": {
-    "shelljs": "^0.8.3"
+  "bin": {
+    "git-stop-track": "bin/index.js"
+  },
+  "scripts": {
+    "git-stop-track": "node bin/index.js"
+  },
+  "dependencies": {
+    "tiny-glob": "^0.2.6",
+    "yargs": "^13.2.4"
   }
 }
