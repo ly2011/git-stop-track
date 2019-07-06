@@ -25,3 +25,5 @@ jsconfig.json
 index.html
 examples
 config
+.vscode
+t1.txt
