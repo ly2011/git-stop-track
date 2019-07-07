@@ -54,9 +54,9 @@ function updateGitignoreConfig() {
   console.log('gitPath: ', gitPath)
   console.log('gitignorePath: ', gitignorePath)
 
-  if (!fs.existsSync(gitPath)) {
-    return console.error('您还没初始化git')
-  }
+  // if (!fs.existsSync(gitPath)) {
+  //   return console.error('您还没初始化git')
+  // }
 
   let argParams = argv.f
   // console.log('argParams: ', argParams)
@@ -68,10 +68,14 @@ function updateGitignoreConfig() {
   }
   // console.log('gitignoreFiles: ', gitignoreFiles)
 
-  const lines = fs
-    .readFileSync(gitignorePath)
-    .toString()
-    .split('\n')
+  let lines = []
+  if (fs.existsSync(gitignorePath)) {
+    lines = fs
+      .readFileSync(gitignorePath)
+      .toString()
+      .split('\n')
+  }
+
   const needGitignoreFiles = difference(gitignoreFiles, lines)
   const needGitignoreFilesStr =
     needGitignoreFiles.length > 0 ? needGitignoreFiles.join('\n') + '\n' : ''
